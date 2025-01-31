@@ -19,7 +19,9 @@ import (
 func main() {
 	counts := make(map[rune]int)    // counts of Unicode characters
 	var utflen [utf8.UTFMax + 1]int // count of lengths of UTF-8 encodings
-	invalid := 0                    // count of invalid UTF-8 characters
+	letters := make(map[string]int)
+
+	invalid := 0 // count of invalid UTF-8 characters
 
 	in := bufio.NewReader(os.Stdin)
 	for {
@@ -37,6 +39,14 @@ func main() {
 		}
 		counts[r]++
 		utflen[n]++
+
+		if unicode.IsLetter(r) {
+			letters["letter"]++
+		} else if unicode.IsDigit((r)) {
+			letters["digit"]++
+		} else {
+			letters["other"]++
+		}
 	}
 	fmt.Printf("rune\tcount\n")
 	for c, n := range counts {
@@ -48,6 +58,12 @@ func main() {
 			fmt.Printf("%d\t%d\n", i, n)
 		}
 	}
+
+	fmt.Print("\nletters\tcount\n")
+	for key, value := range letters {
+		fmt.Printf("%q\t%d\n", key, value)
+	}
+
 	if invalid > 0 {
 		fmt.Printf("\n%d invalid UTF-8 characters\n", invalid)
 	}
