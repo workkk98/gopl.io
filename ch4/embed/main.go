@@ -22,7 +22,7 @@ type Wheel struct {
 
 func main() {
 	var w Wheel
-	//!+
+	//!+ 字面量
 	w = Wheel{Circle{Point{8, 8}, 5}, 20}
 
 	w = Wheel{
