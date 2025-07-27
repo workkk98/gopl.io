@@ -7,10 +7,10 @@ type Foo struct {
 	B int
 }
 
-func producer(ch chan Foo) {
+func producer(ch chan *Foo) {
 	for i := 0; i < 6; i++ {
 		// Foo字面量
-		ch <- Foo{
+		ch <- &Foo{
 			A: i,
 			B: 2 * i,
 		}
@@ -24,7 +24,7 @@ func add(a int, b int) int {
 }
 
 func main() {
-	ch := make(chan Foo) // 无缓冲通道
+	ch := make(chan *Foo) // 无缓冲通道
 
 	go producer(ch)
 
